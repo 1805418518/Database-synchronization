@@ -100,7 +100,10 @@ public class index {
 			}
 		});
 		
+		jb_source_edit.addActionListener(new  button.source_edit());
+		jb_source_new.addActionListener(new button.source_new());
 		
+		jb_target_edit.addActionListener(new button.target_edit());
 		
 		
 		jframe.add(jl_step);
