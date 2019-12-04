@@ -99,7 +99,16 @@ public class index {
 				jf.setVisible(true);
 			}
 		});
-		
+		jb_source_new.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFrame jf_source_new=new JFrame();
+				jf_source_new.setSize(300, 300);
+				jf_source_new.setVisible(true);
+				
+			}
+		});
 		
 		
 		
