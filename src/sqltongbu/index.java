@@ -58,7 +58,10 @@ public class index {
 		jb_source_new.addActionListener(new button.source_new());
 		
 		jb_target_edit.addActionListener(new button.target_edit());
+		jb_target_new.addActionListener(new button.target_new());
 		
+		jb_control_edit.addActionListener(new button.control_edit());
+		jb_control_new.addActionListener(new button.control_new());
 		
 		jframe.add(jl_step);
 		jframe.add(jl_source);

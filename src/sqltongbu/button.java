@@ -11,6 +11,36 @@ import javax.swing.JTextField;
 
 public class button {
 
+	static class control_new implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
+
+	static class control_edit implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
+
+	static class target_new implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
+
 	static class source_edit implements ActionListener {
 
 		@Override
