@@ -54,6 +54,7 @@ public class index {
 		
 		jb_control_edit.setBounds(310, 100, 80, 25);
 		jb_control_new.setBounds(400, 100, 80, 25);
+		
 		jb_source_edit.addActionListener(new  button.source_edit());
 		jb_source_new.addActionListener(new button.source_new());
 		
