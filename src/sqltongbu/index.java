@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -27,12 +29,16 @@ public class index {
 		JLabel jl_source=new JLabel("源数据库连接");
 		JLabel jl_target=new JLabel("目标数据库连接");
 		JLabel jl_control=new JLabel("控制数据库连接");
+		JLabel jl_appoint=new JLabel("指定需同步表SQL");
 		JTabbedPane jtp=new JTabbedPane();
 		JTextField jt_step=new JTextField();
+		JTextArea jt_appoint=new JTextArea(20,100);
+		JScrollPane js_appoint=new JScrollPane(jt_appoint);
+				
 		JComboBox<String> jc_source=new JComboBox<String>();
 		JComboBox<String> jc_target=new JComboBox<String>();
 		JComboBox<String> jc_control=new JComboBox<String>();
-	
+		
 		JButton jb_source_edit=new JButton("编辑");
 		JButton jb_source_new=new JButton("新建");
 		
@@ -41,6 +47,8 @@ public class index {
 		
 		JButton jb_control_edit=new JButton("编辑");
 		JButton jb_control_new=new JButton("新建");
+		JButton jb_determine=new JButton("确定");
+		JButton jb_cancel=new JButton("取消");
 		
 		JLabel  jl_surface=new JLabel("表");
 		JLabel  jl_view =new JLabel("视图");
@@ -109,10 +117,10 @@ public class index {
 		jl_partition.setBounds(50, 150, 120, 20);
 		jl_dblink.setBounds(50, 170, 120, 20);
 		jl_materialized.setBounds(50, 190, 120, 20);
-		
-		
-		
-		
+		jl_appoint.setBounds(40, 460, 200, 30);
+		js_appoint.setBounds(40, 500, 400, 100);
+		jb_determine.setBounds(80,610 , 100, 30);
+		jb_cancel.setBounds(250, 610, 100, 30);
 		
 		jb_source_edit.addActionListener(new  button.source_edit());
 		jb_source_new.addActionListener(new button.source_new());
@@ -161,6 +169,10 @@ public class index {
 		jframe.add(jb_control_edit);
 		jframe.add(jb_control_new);
 		jframe.add(jtp);
+		jframe.add(jl_appoint);
+		jframe.add(js_appoint);
+		jframe.add(jb_determine);
+		jframe.add(jb_cancel);
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jframe.setSize(500, 700);
 		jframe.setLocation(500, 200);
