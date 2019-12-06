@@ -27,7 +27,7 @@ import javax.swing.border.EmptyBorder;
 import Controller.DatabaseController;
 
 public class MainWindow extends JFrame {
-	String[] typeName= {"表", "视图", "序列", "包", "存储过程", "函数", "同义词", "分区表", "DB Link", "物化视图"};
+	private String[] typeName= {"表", "视图", "序列", "包", "存储过程", "函数", "同义词", "分区表", "DB Link", "物化视图"};
 	private JTextField stepText;
 	//泛型<E>，暂时用<String>类型代替，后面可能改为别的类型
 	private JComboBox<String> originBox;
@@ -39,51 +39,23 @@ public class MainWindow extends JFrame {
 	private JComboBox<String> controlBox;
 	private JButton controlEditBtn;
 	private JButton controlNewBtn;
-	private JCheckBox[] typeDatabase = new JCheckBox[typeName.length];
+	private JCheckBox[] typeDatabase;
+	
+	private JButton yes;
+	private JButton cancel;
 	
 	public MainWindow() {
-		Init();
-		add(getJPanel());
-		//jf.pack();
+		Init();	//控件初始化（new 实体类）
+		add(getMainJPanel());
+		
+		pack();
 		setTitle("数据库同步");
-		setSize(500, 700);
+		//setSize(500, 700);
+		setMinimumSize(new Dimension(500, 0));	//高度用pack自适应，宽度使其不小于500
 		setLocationRelativeTo(null);
+		
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-	
-	private JPanel getJPanel(){
-		JPanel jpanel = new JPanel();
-		//中部
-		JTabbedPane centerPanel = new JTabbedPane();
-		Box box = Box.createVerticalBox();
-		box.setBorder(new EmptyBorder(0, 20, 0, 0));
-		//JPanel box = new JPanel(new GridLayout(typeDatabase.length, 1));
-		centerPanel.addTab("数据库对象类型", box);
-		for (JCheckBox jCheckBox : typeDatabase) {
-			jCheckBox.setOpaque(false);
-			box.add(jCheckBox);
-		}
-		
-		//centerPanel.setLayout(new GridLayout(1, 10));
-		//centerPanel.setBorder(BorderFactory.createTitledBorder("数据库对象类型"));
-		
-		
-		//底部
-		JTextArea sqlText = new JTextArea();
-		JScrollPane js=new JScrollPane(sqlText);
-		js.setBorder(BorderFactory.createTitledBorder("指定需同步表SQL"));
-		js.setPreferredSize(new Dimension(0, 150));
-		js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-				
-		jpanel.setBorder(new EmptyBorder(5, 15, 5, 5));
-		jpanel.setLayout(new BorderLayout());
-		jpanel.add(getNorthPanel(), BorderLayout.NORTH);
-		jpanel.add(centerPanel, BorderLayout.CENTER);
-		jpanel.add(js, BorderLayout.SOUTH);
-
-		return jpanel;
 	}
 	
 	private void Init() {		
@@ -97,12 +69,43 @@ public class MainWindow extends JFrame {
 		targetNewBtn = new JButton("新建...");
 		controlEditBtn = new JButton("编辑...");
 		controlNewBtn = new JButton("新建...");
+		typeDatabase = new JCheckBox[typeName.length];
 		Font font = new Font("黑体", Font.PLAIN, 18);
 		for (int i=0; i<typeDatabase.length; i++) {
 			typeDatabase[i] = new JCheckBox(typeName[i], true);
 			//typeDatabase[i].setSize(new Dimension(50, 50));
 			typeDatabase[i].setFont(font);
 		}
+		yes = new JButton("确定");
+		cancel = new JButton("取消");
+	}
+	
+	private JPanel getMainJPanel(){
+		JPanel jpanel = new JPanel();
+				
+		jpanel.setBorder(new EmptyBorder(5, 15, 5, 5));
+		jpanel.setLayout(new BorderLayout(10, 10));
+		
+		jpanel.add(getNorthPanel(), BorderLayout.NORTH);
+		jpanel.add(getCenter(), BorderLayout.CENTER);
+		jpanel.add(getSouth(), BorderLayout.SOUTH);
+		
+		return jpanel;
+	}
+
+	private JTabbedPane getCenter(){
+		JTabbedPane centerPanel = new JTabbedPane();
+		Box box = Box.createVerticalBox();
+		box.setBorder(new EmptyBorder(0, 20, 0, 0));
+		//JPanel box = new JPanel(new GridLayout(typeDatabase.length, 1));
+		centerPanel.addTab("数据库对象类型", box);
+		for (JCheckBox jCheckBox : typeDatabase) {
+			jCheckBox.setOpaque(false);
+			box.add(jCheckBox);
+		}
+		//centerPanel.setPreferredSize(new Dimension(500, 0));
+		
+		return centerPanel;
 	}
 	
 	private JPanel getNorthPanel(){
@@ -115,6 +118,8 @@ public class MainWindow extends JFrame {
 		JLabel label3 = new JLabel("目标数据库连接", SwingConstants.RIGHT);
 		JLabel label4 = new JLabel("控制数据库连接", SwingConstants.RIGHT);
 		
+		
+		//网格布局
 		GridBagLayout layout = new GridBagLayout();
 		box.setLayout(layout);
 		
@@ -132,8 +137,8 @@ public class MainWindow extends JFrame {
 		box.add(controlBox);
 		box.add(controlEditBtn);
 		box.add(controlNewBtn);
+		
 		GridBagConstraints s = new GridBagConstraints();
-		//GridBagConstraints s = new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,  new Insets(5, 5, 5, 5), 10, 10);
 		s.fill = GridBagConstraints.BOTH;
 		
 		s.gridwidth = 2;s.weightx = 0;s.weighty = 0;
@@ -180,4 +185,28 @@ public class MainWindow extends JFrame {
 		
 		return box;
 	}
+	
+	private Box getSouth(){
+		//JPanel jpanel = new JPanel();
+		Box box = Box.createVerticalBox();
+		
+		JTextArea sqlText = new JTextArea();
+		JScrollPane js=new JScrollPane(sqlText);
+		js.setBorder(BorderFactory.createTitledBorder("指定需同步表SQL"));
+		js.setPreferredSize(new Dimension(0, 150));
+		js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		
+		Box btnBox = Box.createHorizontalBox();
+		btnBox.add(yes);
+		btnBox.add(Box.createHorizontalStrut(20));
+		btnBox.add(cancel);
+		
+		box.add(js);
+		box.add(btnBox);
+		return box;
+	}
+	
+	
 }
