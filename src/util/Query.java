@@ -50,12 +50,20 @@ public class Query {
 		 ResultSet rs=null;
 		 try {
 			 conn = DBUtil.getConnection();
+			 
+			 String sql1="insert into ct values(?,?)";
+	         ps=conn.prepareStatement(sql1);
+	         ps.setInt(1, 1);
+	         ps.setString(2, "zyy");
+	         //ps.executeUpdate();
+		
 			 //创建sql语句 但先不给出要查询的记录的id
-			 String sql = "select * from ct where id=?";
+	         String sql = "select * from ct";
+			 //String sql = "select * from ct where id=?";
 			 //创建预处理对象，对sql语句先进行预处理
 			 ps = conn.prepareStatement(sql);
 			 //之后再设置参数id
-			 ps.setInt(1, 1);
+			 //ps.setInt(1, 1);
 			 //最后在把预处理sql语句进行执行，返回结果集
 			 rs = ps.executeQuery();
 			 while(rs.next()) {
