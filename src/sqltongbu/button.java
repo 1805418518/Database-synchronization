@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,25 +17,87 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+
 import util.DBUtil;
 import util.DBUtil2;
 
 public class button {
 
+	
+
+
 	public static String ac_address;
 	public  static String ac_user;
 	public static String ac_password;
 	public static String ac_surface;
+	static Vector<String> items = new Vector<String>();
+	static Vector<String> items1=new Vector<String>();
+	static Vector<String> items2=new Vector<String>();
+	 static ResultSet rs=null;
+	static Connection conn=null;
+	 static PreparedStatement ps=null;
 	
 	
-	static class source_edit implements ActionListener {
+	public static void jcselect()  {
+	
+		conn=DBUtil.getConnection();
+		String sql="Select *from sqldata where ACZL=1";
+		try {
+			ps=conn.prepareStatement(sql);
+		rs=	ps.executeQuery();
+		while(rs.next())
+		{
+			items.add(rs.getString("ACADDRESS")+rs.getString("ACUSER"));
+		}
+			
+		} catch (SQLException e11) {
+			// TODO Auto-generated catch block
+			e11.printStackTrace();
+		}	
+		
+		String sql1="Select *from SQLDATA where ACZL=2";
+		
+		try {
+			ps=conn.prepareStatement(sql1);
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				items1.add(rs.getString("ACADDRESS")+rs.getString("ACUSER"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String sql2="Select *from SQLDATA where ACZL=3";
+		
+		try {
+			ps=conn.prepareStatement(sql2);
+			rs=ps.executeQuery();
+			while(rs.next())
+			{
+				items2.add(rs.getString("ACADDRESS")+rs.getString("ACUSER"));
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
+	static class source_edit implements ActionListener  {
+
+		
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e){
 			// TODO Auto-generated method stub
+		
 			JFrame jf=new JFrame("源数据库编辑连接");
 			jf.setLayout(null);
-			 
+		
+
 			JLabel jl_address=new JLabel("地址");
 			JLabel jl_user=new JLabel("账号");
 			JLabel jl_password=new  JLabel("密码");
@@ -55,6 +118,7 @@ public class button {
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					String ac_address=jt_addres.getText();
+					
 					String ac_user=jt_user.getText();
 					String ac_password=jp_password.getText();
 					String ac_surface=jt_surface.getText();
@@ -124,9 +188,7 @@ public class button {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					 Connection conn=null;
-					 PreparedStatement ps=null;
-					 ResultSet rs=null;
+					
 					// TODO Auto-generated method stub
 					String ac_address=jt_addres.getText();
 					String ac_user=jt_user.getText();
