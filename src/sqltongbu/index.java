@@ -3,6 +3,11 @@ package sqltongbu;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -16,6 +21,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import util.DBUtil;
 
 public class index {
 
@@ -34,8 +41,25 @@ public class index {
 		JTextField jt_step=new JTextField();
 		JTextArea jt_appoint=new JTextArea(20,100);
 		JScrollPane js_appoint=new JScrollPane(jt_appoint);
-				
-		JComboBox<String> jc_source=new JComboBox<String>();
+		Vector<String> items = new Vector<String>();
+		Connection conn=null;
+		 PreparedStatement ps=null;
+		 ResultSet rs=null;
+		conn=DBUtil.getConnection();
+		String sql="Select *from sqldata";
+		try {
+			ps=conn.prepareStatement(sql);
+		rs=	ps.executeQuery();
+		while(rs.next())
+		{
+			items.add(rs.getString("address"));
+		}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		JComboBox jc_source=new JComboBox(items);
 		JComboBox<String> jc_target=new JComboBox<String>();
 		JComboBox<String> jc_control=new JComboBox<String>();
 		
@@ -72,7 +96,7 @@ public class index {
 		JCheckBox jcb_partition=new JCheckBox();
 		JCheckBox jcb_dblink=new JCheckBox();
 		JCheckBox jcb_materialized=new JCheckBox();
-		
+
 		
 		
 		jl_step.setBounds(50, 10, 100, 30);
@@ -180,6 +204,11 @@ public class index {
 		
 		
 
+	}
+
+	private static void wihle(boolean next) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
