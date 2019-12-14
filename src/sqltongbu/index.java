@@ -27,8 +27,15 @@ import util.DBUtil;
 public class index {
 	
 	public static JComboBox jc_source;
+	public static JComboBox jc_target;
+	public static JComboBox jc_control;
 	public static void main(String[] args) {
 	
+		indexmain();
+		
+	}
+
+	public static void indexmain() {
 		JFrame jframe=new JFrame("数据库同步");
 		JPanel jpanel=new JPanel();
 		jpanel.setLayout(null);
@@ -43,11 +50,14 @@ public class index {
 		JTextArea jt_appoint=new JTextArea(20,100);
 		JScrollPane js_appoint=new JScrollPane(jt_appoint);
 		
-			button.jcselect();
 		
+		MyThread thread=new MyThread();
+		thread.start();
+		
+			
 		 jc_source=new JComboBox(button.items);
-		JComboBox jc_target=new JComboBox(button.items1);
-		JComboBox jc_control=new JComboBox(button.items2);
+		 jc_target=new JComboBox(button.items1);
+		 jc_control=new JComboBox(button.items2);
 		
 		
 		
@@ -134,8 +144,8 @@ public class index {
 		js_appoint.setBounds(40, 500, 400, 100);
 		jb_determine.setBounds(80,610 , 100, 30);
 		jb_cancel.setBounds(250, 610, 100, 30);
-		String ac_source=(String)jc_source.getSelectedItem();
-		jb_source_edit.addActionListener(new  button.control_edit());
+		
+		jb_source_edit.addActionListener(new  button.source_edit());
 		jb_source_new.addActionListener(new button.source_new());
 		
 		jb_target_edit.addActionListener(new button.target_edit());
@@ -194,12 +204,16 @@ public class index {
 		jframe.setSize(500, 700);
 		jframe.setLocation(500, 200);
 		jframe.setVisible(true);
-		
-		
-
 	}
 
-	
 
 
+}
+class MyThread extends Thread {
+    @Override
+    public void run() {
+    	
+      button.jcselect();
+    	
+    }
 }
