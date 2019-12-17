@@ -18,8 +18,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 
-import util.DBUtil;
-import util.DBUtil2;
+import Util.DBUtil;
+import Util.DBUtil2;
 
 public class button {
 

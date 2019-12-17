@@ -22,7 +22,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import util.DBUtil;
+import Util.DBUtil;
 
 public class index {
 	
