@@ -3,6 +3,11 @@ package sqltongbu;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -17,8 +22,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class index {
+import Util.DBUtil;
 
+public class index {
+	
+	public static JComboBox jc_source;
 	public static void main(String[] args) {
 	
 		JFrame jframe=new JFrame("数据库同步");
@@ -34,10 +42,15 @@ public class index {
 		JTextField jt_step=new JTextField();
 		JTextArea jt_appoint=new JTextArea(20,100);
 		JScrollPane js_appoint=new JScrollPane(jt_appoint);
-				
-		JComboBox<String> jc_source=new JComboBox<String>();
-		JComboBox<String> jc_target=new JComboBox<String>();
-		JComboBox<String> jc_control=new JComboBox<String>();
+		
+			button.jcselect();
+		
+		 jc_source=new JComboBox(button.items);
+		JComboBox jc_target=new JComboBox(button.items1);
+		JComboBox jc_control=new JComboBox(button.items2);
+		
+		
+		
 		
 		JButton jb_source_edit=new JButton("编辑");
 		JButton jb_source_new=new JButton("新建");
@@ -72,7 +85,7 @@ public class index {
 		JCheckBox jcb_partition=new JCheckBox();
 		JCheckBox jcb_dblink=new JCheckBox();
 		JCheckBox jcb_materialized=new JCheckBox();
-		
+
 		
 		
 		jl_step.setBounds(50, 10, 100, 30);
@@ -121,8 +134,8 @@ public class index {
 		js_appoint.setBounds(40, 500, 400, 100);
 		jb_determine.setBounds(80,610 , 100, 30);
 		jb_cancel.setBounds(250, 610, 100, 30);
-		
-		jb_source_edit.addActionListener(new  button.source_edit());
+		String ac_source=(String)jc_source.getSelectedItem();
+		jb_source_edit.addActionListener(new  button.control_edit());
 		jb_source_new.addActionListener(new button.source_new());
 		
 		jb_target_edit.addActionListener(new button.target_edit());
@@ -130,6 +143,10 @@ public class index {
 		
 		jb_control_edit.addActionListener(new button.control_edit());
 		jb_control_new.addActionListener(new button.control_new());
+		
+	
+		
+		
 		jtp.addTab("数据库对象类型", jpanel);
 		jpanel.add(jcb_surface);
 		jpanel.add(jcb_view);
@@ -181,5 +198,8 @@ public class index {
 		
 
 	}
+
+	
+
 
 }
