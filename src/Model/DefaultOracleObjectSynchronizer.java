@@ -17,11 +17,16 @@ public class DefaultOracleObjectSynchronizer extends DBObjectSynchronizer {
 	}
 	
 	protected boolean getCompileable() {
-		//return true;
+		/**/
+		return true;
+		/**/
 	}
 	
 	protected String[] findAllObjects(Database destDB) {
-		
+		/**/
+		String[] str = null;
+		return str;
+		/**/
 	}
 	
 	protected void compileObject(Database destDB,String dbObjName) {

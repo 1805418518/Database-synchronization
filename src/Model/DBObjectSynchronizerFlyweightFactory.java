@@ -16,10 +16,16 @@ public class DBObjectSynchronizerFlyweightFactory {
 	}
 	
 	public DBObjectSynchronizer factory(DBObjectSynchronizerMeta dbObjectSynchronizerMeta) {
-		
+		/**/
+		DBObjectSynchronizer temp = null;
+		return temp;
+		/**/
 	}
 	
 	private DBObjectSynchronizer buildDBObjectSynchronizer(DBObjectSynchronizerMeta dbObjectSynchronizeMeta) {
-		
+		/**/
+		DBObjectSynchronizer temp = null;
+		return temp;
+		/**/
 	}
 }

@@ -9,7 +9,9 @@ public class IncSynStrategy extends DataSynStrategy {
 
 	@Override
 	public String processSyn() {
-		//return null;
+		/**/
+		return null;
+		/**/
 	}
 	
 	

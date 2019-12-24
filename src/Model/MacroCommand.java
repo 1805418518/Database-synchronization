@@ -10,12 +10,12 @@ public class MacroCommand extends TempTableSynCommand {
 	}
 	
 	@Override
-	public void execute() throws Exception{
+	protected void execute() throws Exception{
 		
 	}
 	
 	@Override
-	public void undo() throws Exception{
+	protected void undo() throws Exception{
 		
 	}
 }

@@ -1,7 +1,5 @@
 package Model;
 
-import BuilderModel.DBSynchronizeManager;
-
 public abstract class DBObjectSynchronizer {
 	protected String objectTypeCode;
 	protected String objectTypeLable;

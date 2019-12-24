@@ -1,7 +1,5 @@
 package Model;
 
-import CompositeModeCommandModeAndResponsibilityChainMode.*;
-
 public class TempTableSynStrategy  extends DataSynStrategy {
 	
 	public TempTableSynStrategy(String tableName,Database srcDB,Database destDB) {

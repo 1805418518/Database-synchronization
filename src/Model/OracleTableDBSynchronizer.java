@@ -7,7 +7,10 @@ public class OracleTableDBSynchronizer extends DefaultOracleObjectSynchronizer {
 	}
 	
 	protected String[] findAllTables(Database destDB) {
-		
+		/**/
+		String[] str =null;
+		return str;
+		/**/
 	}
 	
 	protected void synSingleTable(String tableName,DBSynchronizeManager dbSynchronizeManager) {

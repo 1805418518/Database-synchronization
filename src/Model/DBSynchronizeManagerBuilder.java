@@ -29,6 +29,9 @@ public class DBSynchronizeManagerBuilder {
 	}
 	
 	public DBSynchronizeManager retrieveResult() {
-		
+		/**/
+		DBSynchronizeManager temp = null;
+		return temp;
+		/**/
 	}
 }

@@ -14,6 +14,6 @@ public abstract class DataSynStrategy {
 	*/
 	
 	public String processSyn() {
-		//return null;
+		return null;
 	}
 }
