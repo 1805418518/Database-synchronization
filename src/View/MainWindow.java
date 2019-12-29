@@ -25,18 +25,19 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Controller.DatabaseController;
+import Model.Database;
 
 public class MainWindow extends JFrame {
 	private String[] typeName= {"表", "视图", "序列", "包", "存储过程", "函数", "同义词", "分区表", "DB Link", "物化视图"};
 	private JTextField stepText;
 	//泛型<E>，暂时用<String>类型代替，后面可能改为别的类型
-	private JComboBox<String> originBox;
+	private JComboBox<Database> originBox;
 	private JButton originEditBtn;
 	private JButton originNewBtn;
-	private JComboBox<String> targetBox;
+	private JComboBox<Database> targetBox;
 	private JButton targetEditBtn;
 	private JButton targetNewBtn;
-	private JComboBox<String> controlBox;
+	private JComboBox<Database> controlBox;
 	private JButton controlEditBtn;
 	private JButton controlNewBtn;
 	private JCheckBox[] typeDatabase;
@@ -63,6 +64,8 @@ public class MainWindow extends JFrame {
 		originBox = new JComboBox<>();
 		targetBox = new JComboBox<>();
 		controlBox = new JComboBox<>();
+		
+		
 		originEditBtn = new JButton("编辑...");
 		originNewBtn = new JButton("新建...");
 		targetEditBtn = new JButton("编辑...");
