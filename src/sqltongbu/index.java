@@ -43,7 +43,7 @@ public class index {
 		JTextArea jt_appoint=new JTextArea(20,100);
 		JScrollPane js_appoint=new JScrollPane(jt_appoint);
 		
-			button.jcselect();
+		//button.jcselect();
 		
 		 jc_source=new JComboBox(button.items);
 		JComboBox jc_target=new JComboBox(button.items1);
