@@ -7,6 +7,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -27,17 +31,17 @@ import javax.swing.border.EmptyBorder;
 import Controller.DatabaseController;
 import Model.Database;
 
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements ActionListener, ItemListener {
 	private String[] typeName= {"表", "视图", "序列", "包", "存储过程", "函数", "同义词", "分区表", "DB Link", "物化视图"};
 	private JTextField stepText;
 	//泛型<E>，暂时用<String>类型代替，后面可能改为别的类型
-	private JComboBox<Database> originBox;
+	private static JComboBox<Database> originBox;
 	private JButton originEditBtn;
 	private JButton originNewBtn;
-	private JComboBox<Database> targetBox;
+	private static JComboBox<Database> targetBox;
 	private JButton targetEditBtn;
 	private JButton targetNewBtn;
-	private JComboBox<Database> controlBox;
+	private static JComboBox<Database> controlBox;
 	private JButton controlEditBtn;
 	private JButton controlNewBtn;
 	private JCheckBox[] typeDatabase;
@@ -46,7 +50,8 @@ public class MainWindow extends JFrame {
 	private JButton cancel;
 	
 	public MainWindow() {
-		Init();	//控件初始化（new 实体类）
+		init();	//控件初始化（new 实体类）
+		initListen();
 		add(getMainJPanel());
 		
 		pack();
@@ -58,8 +63,26 @@ public class MainWindow extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+
+	private void initListen(){
+		originEditBtn.addActionListener(this);
+		originNewBtn.addActionListener(this);
+		
+		targetEditBtn.addActionListener(this);
+		targetNewBtn.addActionListener(this);
+		
+		controlEditBtn.addActionListener(this);
+		controlNewBtn.addActionListener(this);
+		
+		yes.addActionListener(this);
+		cancel.addActionListener(this);
+		
+		originBox.addItemListener(this);
+		targetBox.addItemListener(this);
+		controlBox.addItemListener(this);
+	}
 	
-	private void Init() {		
+	private void init() {		
 		stepText = new JTextField(15);
 		originBox = new JComboBox<>();
 		targetBox = new JComboBox<>();
@@ -209,6 +232,110 @@ public class MainWindow extends JFrame {
 		box.add(js);
 		box.add(btnBox);
 		return box;
+	}
+	
+	public static Database getOriginDB(){
+		return (Database)originBox.getSelectedItem();
+	}
+	
+	public static Database getTargetDB(){
+		return (Database)targetBox.getSelectedItem();
+	}
+	
+	public static Database getControlDB(){
+		return (Database)controlBox.getSelectedItem();
+	}
+	
+	public static boolean addOriginDB(Database db) {
+		Database temp;
+		for(int i=0; i<originBox.getItemCount(); i++) {
+			temp = originBox.getItemAt(i);
+			if(temp.getAddress().equals(db.getAddress()) && temp.getDatabaseName().equals(db.getDatabaseName()) && temp.getUsername().equals(db.getUsername())) {
+				return false;
+			}
+		}
+		originBox.addItem(db);
+		return true;
+	}
+	
+	public static boolean addTargetDB(Database db) {
+		Database temp;
+		for(int i=0; i<targetBox.getItemCount(); i++) {
+			temp = targetBox.getItemAt(i);
+			if(temp.getAddress().equals(db.getAddress()) && temp.getDatabaseName().equals(db.getDatabaseName()) && temp.getUsername().equals(db.getUsername())) {
+				return false;
+			}
+		}
+		targetBox.addItem(db);
+		return true;
+	}
+	
+	public static boolean addControlDB(Database db) {
+		Database temp;
+		for(int i=0; i<controlBox.getItemCount(); i++) {
+			temp = controlBox.getItemAt(i);
+			if(temp.getAddress().equals(db.getAddress()) && temp.getDatabaseName().equals(db.getDatabaseName()) && temp.getUsername().equals(db.getUsername())) {
+				return false;
+			}
+		}
+		controlBox.addItem(db);
+		return true;
+	}
+	
+	public static void editOriginDB(Database db) {
+		originBox.removeItem(originBox.getSelectedItem());
+		addOriginDB(db);
+	}
+	
+	public static void editTargetDB(Database db) {
+		targetBox.removeItem(targetBox.getSelectedItem());
+		addTargetDB(db);
+	}
+	
+	public static void editControlDB(Database db) {
+		controlBox.removeItem(controlBox.getSelectedItem());
+		addControlDB(db);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(originEditBtn)) {
+			new DatabaseEdit(this, DatabaseEdit.EDIT_ITEM, DatabaseEdit.SRC_DB);
+		}else if(e.getSource().equals(originNewBtn)) {
+			new DatabaseEdit(this, DatabaseEdit.NEW_ITEM, DatabaseEdit.SRC_DB);
+		}else if(e.getSource().equals(targetEditBtn)) {
+			new DatabaseEdit(this, DatabaseEdit.EDIT_ITEM, DatabaseEdit.DEST_DB);
+		}else if(e.getSource().equals(targetNewBtn)) {
+			new DatabaseEdit(this, DatabaseEdit.NEW_ITEM, DatabaseEdit.DEST_DB);
+		}else if(e.getSource().equals(controlEditBtn)) {
+			new DatabaseEdit(this, DatabaseEdit.EDIT_ITEM, DatabaseEdit.CTRL_DB);
+		}else if(e.getSource().equals(controlNewBtn)) {
+			new DatabaseEdit(this, DatabaseEdit.NEW_ITEM, DatabaseEdit.CTRL_DB);
+		}
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		//System.out.println("1");
+		if(e.getSource().equals(originBox)) {
+			if(originBox.getSelectedItem() == null) {
+				originEditBtn.setEnabled(false);
+			}else {
+				originEditBtn.setEnabled(true);
+			}
+		}else if(e.getSource().equals(targetBox)) {
+			if(targetBox.getSelectedItem() == null) {
+				targetEditBtn.setEnabled(false);
+			}else {
+				targetEditBtn.setEnabled(true);
+			}
+		}else if(e.getSource().equals(controlBox)) {
+			if(controlBox.getSelectedItem() == null) {
+				controlEditBtn.setEnabled(false);
+			}else {
+				controlEditBtn.setEnabled(true);
+			}
+		}
 	}
 	
 	
