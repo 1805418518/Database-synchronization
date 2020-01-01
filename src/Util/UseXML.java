@@ -23,6 +23,8 @@ public class UseXML {
 	 * = new SAXReader(); Document document = reader.read(file); return document; }
 	 */
 
+	private static String pass = "gancheng";
+	
 	public static void addDatabase(File file, String type, Database db) {
 		Document document = readXML(file);
 		addDatabase(document, type, db);
@@ -81,7 +83,7 @@ public class UseXML {
 		Element root = document.getRootElement();
 		root.addElement(type).addAttribute("address", db.getAddress())
 				.addAttribute("dbname", db.getDatabaseName()).addAttribute("username", db.getUsername())
-				.addAttribute("password", db.getPassword());
+				.addAttribute("password", DESUtil.encrypt(pass, db.getPassword()));
 	}
 
 	private static void removeDatabase(Document document, String type, Database db) {
@@ -91,7 +93,7 @@ public class UseXML {
 			if (element.attributeValue("address").equals(db.getAddress())
 					&& element.attributeValue("dbname").equals(db.getDatabaseName())
 					&& element.attributeValue("username").equals(db.getUsername())
-					&& element.attributeValue("password").equals(db.getPassword())) {
+					&& DESUtil.decrypt(pass, element.attributeValue("password")).equals(db.getPassword())) {
 				root.remove(element);
 			}
 		}
@@ -103,7 +105,7 @@ public class UseXML {
 		for (Iterator<Element> it = root.elementIterator(type); it.hasNext();) {
 			Element element = it.next();
 			dbs.add(new Database(element.attributeValue("address"), element.attributeValue("username"),
-					element.attributeValue("password"), element.attributeValue("dbname")));
+					DESUtil.decrypt(pass, element.attributeValue("password")), element.attributeValue("dbname")));
 		}
 		return dbs;
 	}
