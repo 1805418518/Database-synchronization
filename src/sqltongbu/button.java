@@ -113,7 +113,7 @@ public class button {
 			String ac_source=(String) index.jc_source.getSelectedItem();
 			
 			conn=DBUtil.getConnection();
-			String sql="Select *from SQLDATA where ACREMARKS='"+ac_source+"'";
+			String sql="Select * from SQLDATA where ACREMARKS='"+ac_source+"'";
 			try {
 				ps=conn.prepareStatement(sql);
 			rs=	ps.executeQuery();
