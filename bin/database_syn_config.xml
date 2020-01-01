@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 省略部分语句 -->
+
+<dbSynchronizeManager dbType="oracle" class="com.chinacreator.dbSyn.oracle.OracleDB SynchronizeManager"/>
+
+<!-- 省略部分语句 -->

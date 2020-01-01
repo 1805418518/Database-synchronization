@@ -1,19 +1,22 @@
 SELECT *from sqldata;
+
+--ÐòÁÐ
 create sequence  sqldatas
 increment by 1
  start with 1
  minvalue 1
  maxvalue 999999999;
- 
+
+--É¾³ýÐòÁÐ
 drop sequence sqldatas;
- 
+
+--´¥·¢Æ÷
 create or replace trigger test_ids
 before insert on SQLDATA
 for each row
 begin
 	select sqldatas.nextval into :new.id from dual;
 end;
-
 
 
 insert into sqldata (ACADDRESS,ACUSER,ACPASSWORD,ACSURFACE,ACZL) values(4,2,2,2,3);
