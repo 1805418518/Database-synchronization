@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Box;
@@ -21,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 
 import Model.Database;
 import Util.DBUtil3;
+import Util.UseXML;
 
 public class DatabaseEdit extends JDialog{
 	public static final String EDIT_ITEM = "编辑";
@@ -28,6 +30,8 @@ public class DatabaseEdit extends JDialog{
 	public static final String SRC_DB = "源数据库";
 	public static final String DEST_DB = "目标数据库";
 	public static final String CTRL_DB = "控制数据库";
+	
+	public static String xmlFileName = "database_save.xml";
 	
 	private String item_type="";
 	private String db_type="";
@@ -59,39 +63,58 @@ public class DatabaseEdit extends JDialog{
 				switch(db_type) {
 				case SRC_DB:
 					if(item_type.equals(EDIT_ITEM)) {
-						//删除xml里的tmp = MainWindow.getOriginDB()值
-						
-						//从xml里添加db
-						
+						UseXML.removeDatabase(new File(xmlFileName), db_type, MainWindow.getOriginDB());
+						UseXML.addDatabase(new File(xmlFileName), db_type, db);
 						MainWindow.editOriginDB(db);
 					}else if(item_type.equals(NEW_ITEM)) {
 						if(MainWindow.addOriginDB(db)) {
-							//从xml里添加db
-							
+							UseXML.addDatabase(new File(xmlFileName), db_type, db);
 						}
 					}
 					break;
 				case DEST_DB:
-					
+					if(item_type.equals(EDIT_ITEM)) {
+						UseXML.removeDatabase(new File(xmlFileName), db_type, MainWindow.getTargetDB());
+						UseXML.addDatabase(new File(xmlFileName), db_type, db);
+						MainWindow.editTargetDB(db);
+					}else if(item_type.equals(NEW_ITEM)) {
+						if(MainWindow.addTargetDB(db)) {
+							UseXML.addDatabase(new File(xmlFileName), db_type, db);
+						}
+					}
 					break;
 				case CTRL_DB:
-					
+					if(item_type.equals(EDIT_ITEM)) {
+						UseXML.removeDatabase(new File(xmlFileName), db_type, MainWindow.getControlDB());
+						UseXML.addDatabase(new File(xmlFileName), db_type, db);
+						MainWindow.editControlDB(db);
+					}else if(item_type.equals(NEW_ITEM)) {
+						if(MainWindow.addControlDB(db)) {
+							UseXML.addDatabase(new File(xmlFileName), db_type, db);
+						}
+					}
 					break;
 				}
 			}
 		});
 		testBtn.addActionListener(new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				Database db = getDatabase();
 				switch(db_type) {
 				case SRC_DB:
-					DBUtil3.testConnection(MainWindow.getOriginDB());
+					DBUtil3.testConnection(db);
+					System.out.println("add="+db.getAddress());
+					System.out.println("db="+db.getDatabaseName());
+					System.out.println("user="+db.getUsername());
+					System.out.println("pass="+db.getPassword());
 					break;
 				case DEST_DB:
-					DBUtil3.testConnection(MainWindow.getTargetDB());
+					DBUtil3.testConnection(db);
 					break;
 				case CTRL_DB:
-					DBUtil3.testConnection(MainWindow.getControlDB());
+					DBUtil3.testConnection(db);
 					break;
 				}
 				

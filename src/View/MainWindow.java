@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -27,9 +29,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
-import Controller.DatabaseController;
 import Model.Database;
+import Util.UseXML;
 
 public class MainWindow extends JFrame implements ActionListener, ItemListener {
 	private String[] typeName= {"表", "视图", "序列", "包", "存储过程", "函数", "同义词", "分区表", "DB Link", "物化视图"};
@@ -51,6 +52,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
 	
 	public MainWindow() {
 		init();	//控件初始化（new 实体类）
+		getDatabases();
 		initListen();
 		add(getMainJPanel());
 		
@@ -232,6 +234,21 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
 		box.add(js);
 		box.add(btnBox);
 		return box;
+	}
+	
+	private void getDatabases(){
+		List<Database> src = UseXML.getDatabases(new File(DatabaseEdit.xmlFileName), DatabaseEdit.SRC_DB);
+		for(Database db : src) {
+			originBox.addItem(db);
+		}
+		List<Database> dest = UseXML.getDatabases(new File(DatabaseEdit.xmlFileName), DatabaseEdit.DEST_DB);
+		for(Database db : dest) {
+			targetBox.addItem(db);
+		}
+		List<Database> ctrl = UseXML.getDatabases(new File(DatabaseEdit.xmlFileName), DatabaseEdit.CTRL_DB);
+		for(Database db : ctrl) {
+			controlBox.addItem(db);
+		}
 	}
 	
 	public static Database getOriginDB(){

@@ -32,7 +32,7 @@ public class DBUtil3 {
 	
 	public static void testConnection(Database db) {
 		String driver = "oracle.jdbc.driver.OracleDriver";//oracle驱动
-		String url = "jdbc:oracle:thin:@"+ db.getAddress()+":1521:"+db.getDatabaseName();//ip:1521:xe
+		String url = "jdbc:oracle:thin:@ "+ db.getAddress()+":1521:"+db.getDatabaseName();//ip:1521:xe
 		String username = db.getUsername() +" as "+ "SYSDBA";//数据库用户名 as 连接为（有Normal,SYSDBA,SYSOPER）
 		String password =db.getPassword() ;//密码
 		Connection connection=null;

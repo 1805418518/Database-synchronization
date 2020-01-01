@@ -40,6 +40,6 @@ public class Database {
 	
 	@Override
 	public String toString() {
-		return address + ":" + databaseName;
+		return address + " : " + databaseName + " : " + username;
 	}
 }
