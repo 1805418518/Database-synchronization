@@ -69,6 +69,7 @@ public class DatabaseEdit extends JDialog{
 					}else if(item_type.equals(NEW_ITEM)) {
 						if(MainWindow.addOriginDB(db)) {
 							UseXML.addDatabase(new File(xmlFileName), db_type, db);
+							dispose();
 						}
 					}
 					break;
@@ -80,6 +81,7 @@ public class DatabaseEdit extends JDialog{
 					}else if(item_type.equals(NEW_ITEM)) {
 						if(MainWindow.addTargetDB(db)) {
 							UseXML.addDatabase(new File(xmlFileName), db_type, db);
+							dispose();
 						}
 					}
 					break;
@@ -91,6 +93,7 @@ public class DatabaseEdit extends JDialog{
 					}else if(item_type.equals(NEW_ITEM)) {
 						if(MainWindow.addControlDB(db)) {
 							UseXML.addDatabase(new File(xmlFileName), db_type, db);
+							dispose();
 						}
 					}
 					break;
@@ -132,11 +135,20 @@ public class DatabaseEdit extends JDialog{
 		testBtn = new JButton("≤‚ ‘");
 		
 		if(item_type.equals(EDIT_ITEM)) {
-			Database db = MainWindow.getOriginDB();
-			addressText.setText(db.getAddress());
-			usernameText.setText(db.getUsername());
-			passwordText.setText(db.getPassword());
-			databaseNameText.setText(db.getDatabaseName());
+			Database db = null;
+			if(db_type.equals(SRC_DB)) {
+				db = MainWindow.getOriginDB();
+			}else if(db_type.equals(DEST_DB)) {
+				db = MainWindow.getTargetDB();
+			}else if(db_type.equals(CTRL_DB)) {
+				db = MainWindow.getControlDB();
+			}
+			if(db!=null) {
+				addressText.setText(db.getAddress());
+				usernameText.setText(db.getUsername());
+				passwordText.setText(db.getPassword());
+				databaseNameText.setText(db.getDatabaseName());
+			}
 		}
 	}
 	

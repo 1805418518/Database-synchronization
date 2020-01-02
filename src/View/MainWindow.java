@@ -54,6 +54,15 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
 		init();	//控件初始化（new 实体类）
 		getDatabases();
 		initListen();
+		if(originBox.getSelectedItem() == null) {
+			originEditBtn.setEnabled(false);
+		}
+		if(targetBox.getSelectedItem() == null) {
+			targetEditBtn.setEnabled(false);
+		}
+		if(controlBox.getSelectedItem() == null) {
+			controlEditBtn.setEnabled(false);
+		}
 		add(getMainJPanel());
 		
 		pack();
@@ -272,6 +281,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
 			}
 		}
 		originBox.addItem(db);
+		originBox.setSelectedItem(db);
 		return true;
 	}
 	
@@ -284,6 +294,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
 			}
 		}
 		targetBox.addItem(db);
+		targetBox.setSelectedItem(db);
 		return true;
 	}
 	
@@ -296,6 +307,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
 			}
 		}
 		controlBox.addItem(db);
+		controlBox.setSelectedItem(db);
 		return true;
 	}
 	
@@ -333,7 +345,7 @@ public class MainWindow extends JFrame implements ActionListener, ItemListener {
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		//System.out.println("1");
+		System.out.println("1");
 		if(e.getSource().equals(originBox)) {
 			if(originBox.getSelectedItem() == null) {
 				originEditBtn.setEnabled(false);
